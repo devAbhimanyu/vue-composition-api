@@ -18,16 +18,10 @@
 import { defineComponent, ref, computed } from "vue";
 
 import moment from "moment";
-import { today, thisWeek, thisMonth } from "../mocks";
+import { today, thisWeek, thisMonth, Post } from "../mocks";
 import TimeLinePost from "./TimeLinePost.vue";
-
+import { useStore } from "../store";
 type Period = "Today" | "This Week" | "This Month";
-
-function delay() {
-  return new Promise((res) => {
-    setTimeout(res, 2000);
-  });
-}
 
 export default defineComponent({
   name: "Timeline",
@@ -35,12 +29,19 @@ export default defineComponent({
     TimeLinePost,
   },
   async setup() {
-    await delay();
     const periods = ["Today", "This Week", "This Month"];
     const currentPeriod = ref<Period>("Today");
-
+    const store = useStore();
+    if (!store.getState().posts.loaded) await store.fetchPosts();
+    const allPosts = store.getState().posts.ids.reduce<Post[]>((acc, id) => {
+      const thePost = store.getState().posts.all.get(id);
+      if (!thePost) {
+        throw Error("The post is not present");
+      }
+      return acc.concat(thePost);
+    }, []);
     const posts = computed(() => {
-      return [today, thisWeek, thisMonth].filter((post) => {
+      return allPosts.filter((post) => {
         const { value } = currentPeriod;
         if (value === "Today") {
           return post.created.isAfter(moment().subtract(1, "day"));
