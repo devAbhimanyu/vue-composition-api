@@ -1,7 +1,6 @@
 import { mount, flushPromises } from "@vue/test-utils";
 import Timeline from "@/components/Timeline.vue";
 import { thisMonth, thisWeek, today } from "../../src/mocks";
-import { nextTick } from "@vue/runtime-core";
 
 jest.mock("axios", () => ({
   get: (url: string) => {
