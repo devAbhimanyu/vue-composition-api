@@ -1,7 +1,9 @@
 import { createApp } from "vue";
 import App from "./App.vue";
+import { router } from "./router";
 import axios from "axios";
 import { thisMonth, thisWeek, today } from "./mocks";
+
 function delay() {
   return new Promise((res) => {
     setTimeout(res, 2200);
@@ -18,4 +20,6 @@ axios.get = async (url: string) => {
   }
 };
 
-createApp(App).mount("#app");
+const app = createApp(App);
+app.use(router);
+app.mount("#app");

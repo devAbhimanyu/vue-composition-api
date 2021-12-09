@@ -1,27 +1,20 @@
 <template>
   <section class="section">
     <div class="container">
-      <suspense>
-        <template #default>
-          <timeline />
-        </template>
-        <template #fallback>
-          <the-spinner></the-spinner>
-        </template>
-      </suspense>
+      <the-navbar />
+      <router-view></router-view>
     </div>
   </section>
 </template>
 
 <script lang="ts">
 import { defineComponent } from "vue";
-import Timeline from "./components/Timeline.vue";
-import TheSpinner from "./components/TheSpinner.vue";
+import TheNavbar from "./components/TheNavbar.vue";
+
 export default defineComponent({
   name: "App",
   components: {
-    Timeline,
-    TheSpinner,
+    TheNavbar,
   },
 });
 </script>
