@@ -19,8 +19,11 @@
 
 <script lang="ts">
 import { Post } from "@/mocks";
-import { defineComponent, onMounted, ref, watch, watchEffect } from "vue";
+import { defineComponent, onMounted, ref, watch } from "vue";
 import { parse } from "marked";
+import highlight from "highlight.js";
+import { debounce } from "lodash";
+
 export default defineComponent({
   name: "PostWriter",
   props: {
@@ -36,24 +39,30 @@ export default defineComponent({
     const contentEditable = ref<HTMLDivElement | null>(null);
     const mdString = ref("");
 
-    watchEffect(() => {
-      mdString.value = parse(content.value);
-    });
-    // both are the same same but watchEffect is cleaner
-    // watch(
-    //   content,
-    //   (newContent) => {
-    //     mdString.value = parse(newContent);
-    //   },
-    //   {
-    //     immediate: true,
-    //   }
-    // );
+    const parseHtml = (str: string) => {
+      mdString.value = parse(str, {
+        gfm: true,
+        breaks: true,
+        highlight: (code: string) => {
+          return highlight.highlightAuto(code).value;
+        },
+      });
+    };
 
-    console.log(mdString.value);
+    watch(
+      content,
+      debounce((newContent) => {
+        parseHtml(newContent);
+      }, 250),
+      {
+        immediate: true,
+      }
+    );
+
     function inputHandler() {
       if (contentEditable.value?.textContent)
         content.value = contentEditable.value.innerText;
+      else content.value = "";
     }
 
     onMounted(() => {
@@ -66,4 +75,8 @@ export default defineComponent({
 });
 </script>
 
-<style></style>
+<style>
+.column {
+  overflow-y: scroll;
+}
+</style>

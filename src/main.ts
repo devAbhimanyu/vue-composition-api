@@ -1,8 +1,10 @@
 import { createApp } from "vue";
 import App from "./App.vue";
+
 import { router } from "./router";
 import axios from "axios";
 import { thisMonth, thisWeek, today } from "./mocks";
+import "highlight.js/styles/atom-one-dark.css";
 
 function delay() {
   return new Promise((res) => {
