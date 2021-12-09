@@ -15,6 +15,13 @@
       <div v-html="mdString"></div>
     </div>
   </div>
+  <div class="columns">
+    <div class="column">
+      <button @click="save" class="button is-primary is-pulled-right">
+        Save
+      </button>
+    </div>
+  </div>
 </template>
 
 <script lang="ts">
@@ -32,8 +39,14 @@ export default defineComponent({
       required: true,
     },
   },
-  setup(props) {
+  emits: {
+    save: (post: Post) => {
+      return true;
+    },
+  },
+  setup(props, ctx) {
     const { post } = props;
+    const { emit } = ctx;
     const title = ref(post.title);
     const content = ref("## Title\nEnter your post content");
     const contentEditable = ref<HTMLDivElement | null>(null);
@@ -70,7 +83,16 @@ export default defineComponent({
         contentEditable.value.textContent = content.value;
     });
 
-    return { title, content, contentEditable, inputHandler, mdString };
+    const save = () => {
+      const newPost: Post = {
+        ...post,
+        title: title.value,
+        html: mdString.value,
+        markdown: content.value,
+      };
+      emit("save", newPost);
+    };
+    return { title, content, contentEditable, inputHandler, mdString, save };
   },
 });
 </script>

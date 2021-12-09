@@ -3,6 +3,8 @@ export interface Post {
   id: string;
   title: string;
   created: moment.Moment;
+  html?: string;
+  markdown?: string;
 }
 
 export const today: Post = {
