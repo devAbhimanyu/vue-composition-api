@@ -18,7 +18,7 @@
 import { defineComponent, ref, computed } from "vue";
 
 import moment from "moment";
-import { today, thisWeek, thisMonth, Post } from "../mocks";
+import { Post } from "../mocks";
 import TimeLinePost from "./TimeLinePost.vue";
 import { useStore } from "../store";
 type Period = "Today" | "This Week" | "This Month";
@@ -29,7 +29,7 @@ export default defineComponent({
     TimeLinePost,
   },
   async setup() {
-    const periods = ["Today", "This Week", "This Month"];
+    const periods: Period[] = ["Today", "This Week", "This Month"];
     const currentPeriod = ref<Period>("Today");
     const store = useStore();
     if (!store.getState().posts.loaded) await store.fetchPosts();
