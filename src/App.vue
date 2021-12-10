@@ -16,7 +16,7 @@
 </template>
 
 <script lang="ts">
-import { computed, defineComponent } from "vue";
+import { computed, defineComponent, ref } from "vue";
 import TheNavbar from "./components/TheNavbar.vue";
 import { useModal } from "./composable/useModal";
 export default defineComponent({
@@ -26,6 +26,7 @@ export default defineComponent({
   },
   setup() {
     const modal = useModal();
+    const username = ref("enter name");
     const style = computed(() => {
       return {
         display: modal.show.value ? "block" : "none",
@@ -34,7 +35,7 @@ export default defineComponent({
 
     const closeModal = modal.hidModal;
 
-    return { style, closeModal };
+    return { style, closeModal, username };
   },
 });
 </script>

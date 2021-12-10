@@ -7,14 +7,14 @@
       </div>
     </div>
   </nav>
-  <teleport to="#modal">
-    <div>Modal</div>
-  </teleport>
+  <teleport to="#modal"> <sign-up></sign-up>> </teleport>
 </template>
 
 <script lang="ts">
 import { useModal } from "@/composable/useModal";
+import SignUp from "./SignUp.vue";
 export default {
+  components: { SignUp },
   setup() {
     const modal = useModal();
     return { show: modal.showModal };
