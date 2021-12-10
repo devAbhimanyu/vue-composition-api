@@ -37,7 +37,7 @@ interface State {
 // symbol is always unique
 export const storeKey = Symbol("store");
 
-class Store {
+export class Store {
   private state: State;
 
   constructor(initial: State) {
