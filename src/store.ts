@@ -108,5 +108,3 @@ export const useStore = () => {
 
   return _store;
 };
-
-console.log(store.getState().posts.loaded);

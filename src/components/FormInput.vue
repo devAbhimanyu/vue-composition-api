@@ -3,6 +3,7 @@
     <label class="label" :name="name">{{ name }}</label>
     <div class="control">
       <input
+        :id="name"
         class="input"
         :type="type"
         :value="modelValue"

@@ -2,7 +2,9 @@
   <nav class="navbar">
     <div class="navbar-end">
       <div class="buttons">
-        <button class="button" @click="show">Sign Up</button>
+        <button class="button" data-test="sign-up" @click="show">
+          Sign Up
+        </button>
         <router-link to="/posts/new" class="button">New Post</router-link>
       </div>
     </div>
