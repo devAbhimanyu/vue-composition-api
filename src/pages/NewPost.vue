@@ -8,20 +8,28 @@ import { defineComponent } from "vue";
 import PostWriter from "@/components/PostWriter.vue";
 import { Post } from "@/mocks";
 import moment from "moment";
-
+import { useStore } from "@/store";
+import { useRouter } from "vue-router";
 export default defineComponent({
   name: "NewPost",
   components: {
     PostWriter,
   },
   setup() {
+    const store = useStore();
+    const router = useRouter();
     const newPost: Post = {
       id: "12",
       title: "test post",
-      created: moment(),
+      created: moment().subtract(1, "second"),
     };
-    const save = (post: Post) => {
-      console.log(post);
+    /**
+     * creating new post
+     * @param {Post} post
+     */
+    const save = async (post: Post) => {
+      await store.createPost(post);
+      router.push("/");
     };
     return { newPost, save };
   },

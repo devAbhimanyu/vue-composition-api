@@ -39,6 +39,13 @@ class Store {
     postState.loaded = true;
     this.state.posts = postState;
   }
+
+  async createPost(post: Post) {
+    const { data } = await axios.post<Post>("/posts", post);
+    this.state.posts.all.set(data.id, data);
+    this.state.posts.ids.push(data.id);
+    console.log(data);
+  }
 }
 
 const store = new Store({
