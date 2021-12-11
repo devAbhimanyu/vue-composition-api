@@ -1,5 +1,5 @@
-import { mount, flushPromises } from "@vue/test-utils";
-import PostWriter from "@/components/PostWriter.vue";
+import { mount } from "@vue/test-utils";
+import PostWriter from "@/components/post/PostWriter.vue";
 
 describe("PostWriter.vue", () => {
   it("renders today post by default", async () => {

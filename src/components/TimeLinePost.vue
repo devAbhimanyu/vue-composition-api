@@ -1,14 +1,14 @@
 <template>
-  <a :key="post.id" class="panel-block">
+  <router-link :to="path" :key="post.id" class="panel-block">
     <div class="is-flex is-flex-direction-column is-align-items-flex-start">
       <a>{{ post.title }}</a>
       <div>{{ post.created.format("Do MMM") }}</div>
     </div>
-  </a>
+  </router-link>
 </template>
 
 <script lang="ts">
-import { defineComponent } from "vue";
+import { computed, defineComponent } from "vue";
 import { Post } from "../mocks";
 
 export default defineComponent({
@@ -18,6 +18,12 @@ export default defineComponent({
       type: Object as () => Post,
       required: true,
     },
+  },
+  setup(props) {
+    const path = computed(() => {
+      return `/posts/${props.post.id}`;
+    });
+    return { path };
   },
 });
 </script>

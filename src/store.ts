@@ -87,12 +87,25 @@ export class Store {
     console.log(data);
   }
 
+  async updatePost(post: Post) {
+    const response = await axios.put<Post>("/posts", post);
+    this.state.posts.all.set(response.data.id, response.data);
+  }
+
   async createUser(user: User) {
     const { data } = await axios.post<Author>("/users", user);
     this.state.authors.all.set(data.id, data);
     this.state.authors.ids.push(data.id);
     this.state.authors.currentUserId = data.id;
     console.log(this.state.authors);
+  }
+
+  async signIn(user: User) {
+    // hard code test user as id: 1
+    const response = await axios.post<Author>("/sign_in", user);
+    this.state.authors.all.set("1", response.data);
+    this.state.authors.ids.push("1");
+    this.state.authors.currentUserId = "1";
   }
 }
 

@@ -1,10 +1,10 @@
 import { createApp } from "vue";
 import App from "./App.vue";
-import { router } from "./router";
+import { routerWithStore } from "./router";
 import axios from "axios";
 import FormInput from "./components/FormInput.vue";
 import { random } from "lodash";
-import { thisMonth, thisWeek, today } from "./mocks";
+import { Post, thisMonth, thisWeek, today } from "./mocks";
 import "highlight.js/styles/atom-one-dark.css";
 import { Author, store } from "./store";
 
@@ -28,7 +28,7 @@ axios.get = async (url: string) => {
 axios.post = async (url: string, payload: any) => {
   if (url === "/posts") {
     await delay();
-    const id = random(100, 10000);
+    const id = random(100, 10000).toString();
     return Promise.resolve({
       data: { ...payload, id },
     });
@@ -46,7 +46,24 @@ axios.post = async (url: string, payload: any) => {
   }
 };
 
+// @ts-ignore
+axios.put = async (url: string, payload: any) => {
+  if (url === "/posts") {
+    await delay();
+    const post: Post = {
+      ...payload,
+      title: payload.title,
+      created: payload.created,
+      authorId: payload.authorId,
+    };
+    return Promise.resolve<{ data: Post }>({
+      data: post,
+    });
+  }
+};
+
 const app = createApp(App);
+const router = routerWithStore(store);
 app.use(router);
 app.use(store);
 app.component("form-input", FormInput);
