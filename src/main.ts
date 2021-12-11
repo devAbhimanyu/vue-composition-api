@@ -4,7 +4,7 @@ import { router } from "./router";
 import axios from "axios";
 import FormInput from "./components/FormInput.vue";
 import { random } from "lodash";
-import { Post, thisMonth, thisWeek, today } from "./mocks";
+import { thisMonth, thisWeek, today } from "./mocks";
 import "highlight.js/styles/atom-one-dark.css";
 import { Author, store } from "./store";
 

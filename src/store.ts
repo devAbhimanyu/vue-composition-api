@@ -10,11 +10,6 @@ export interface User {
 
 export type Author = Omit<User, "password">;
 
-interface PostState {
-  ids: string[];
-  all: Map<string, Post>;
-  loaded: boolean;
-}
 interface BaseState<T> {
   // o(n)
   ids: string[]; // [1, 2, 3, 4]
@@ -25,7 +20,8 @@ interface BaseState<T> {
   loaded: boolean;
 }
 
-type PostsState = BaseState<Post>;
+type PostState = BaseState<Post>;
+
 interface AuthorsState extends BaseState<Author> {
   currentUserId: string | undefined;
 }
@@ -44,14 +40,25 @@ export class Store {
     this.state = reactive(initial);
   }
 
+  /**
+   * @function getter for store state
+   * @returns {State} store state
+   */
   getState() {
     return readonly(this.state);
   }
 
+  /**
+   * @function installing plugin to app instance
+   * @param {App} app Vue App
+   */
   install(app: App) {
     app.provide(storeKey, this);
   }
 
+  /**
+   * @function Fetches posts from api and sets it to state.posts
+   */
   async fetchPosts() {
     const { data } = await axios.get<Post[]>("/posts");
 
@@ -69,6 +76,10 @@ export class Store {
     this.state.posts = postState;
   }
 
+  /**
+   * add new post to api and store
+   * @param {Post} post new post
+   */
   async createPost(post: Post) {
     const { data } = await axios.post<Post>("/posts", post);
     this.state.posts.all.set(data.id, data);
@@ -77,12 +88,11 @@ export class Store {
   }
 
   async createUser(user: User) {
-    console.log("user", user);
-    // const response = await axios.post<Author>("/users", user);
-    // this.state.authors.all.set(response.data.id, response.data);
-    // this.state.authors.ids.push(response.data.id);
-    // this.state.authors.currentUserId = response.data.id;
-    // console.log(this.state.authors);
+    const { data } = await axios.post<Author>("/users", user);
+    this.state.authors.all.set(data.id, data);
+    this.state.authors.ids.push(data.id);
+    this.state.authors.currentUserId = data.id;
+    console.log(this.state.authors);
   }
 }
 
@@ -96,7 +106,7 @@ export const store = new Store({
     all: new Map<string, Author>(),
     ids: [],
     loaded: false,
-    currentUserId: "1",
+    currentUserId: "",
   },
 });
 
