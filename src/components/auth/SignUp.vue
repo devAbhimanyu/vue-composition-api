@@ -25,10 +25,10 @@
 
 <script lang="ts">
 import { computed, defineComponent, ref } from "vue";
-import FormInput from "./FormInput.vue";
-import { required, length, Status, validate } from "../utils";
-import { User, useStore } from "../store";
-import { useModal } from "../composable/useModal";
+import FormInput from "../FormInput.vue";
+import { required, length, Status, validate } from "../../utils";
+import { User, useStore } from "../../store";
+import { useModal } from "../../composable/useModal";
 
 export default defineComponent({
   components: {

@@ -1,6 +1,6 @@
 import { mount } from "@vue/test-utils";
 import Navbar from "../../src/components/TheNavbar.vue";
-import SignUp from "../../src/components/SignUp.vue";
+import SignUp from "../../src/components/auth/SignUp.vue";
 import { Store } from "../../src/store";
 
 jest.mock("vue-router", () => ({

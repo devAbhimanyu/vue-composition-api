@@ -21,7 +21,7 @@
 <script lang="ts">
 import { defineComponent, h, markRaw } from "vue";
 import { useModal } from "../composable/useModal";
-import SignUp from "./SignUp.vue";
+import SignUp from "./auth/SignUp.vue";
 import { useStore } from "../store";
 import { computed } from "@vue/reactivity";
 export default defineComponent({

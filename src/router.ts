@@ -2,6 +2,7 @@ import { createRouter, createWebHistory } from "vue-router";
 import Home from "./pages/Home.vue";
 import NewPost from "./pages/NewPost.vue";
 import EditPost from "./pages/EditPost.vue";
+import ShowPost from "./pages/ShowPost.vue";
 import { Store } from "./store";
 
 export const routerWithStore = (store: Store) => {
@@ -18,6 +19,10 @@ export const routerWithStore = (store: Store) => {
         meta: {
           requiresAuth: true,
         },
+      },
+      {
+        path: "/posts/:id",
+        component: ShowPost,
       },
       {
         path: "/posts/new",

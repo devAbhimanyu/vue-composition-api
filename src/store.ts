@@ -107,6 +107,10 @@ export class Store {
     this.state.authors.ids.push("1");
     this.state.authors.currentUserId = "1";
   }
+
+  signOut() {
+    this.state.authors.currentUserId = undefined;
+  }
 }
 
 export const store = new Store({
