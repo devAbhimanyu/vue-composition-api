@@ -44,6 +44,20 @@ axios.post = async (url: string, payload: any) => {
       data: author,
     });
   }
+
+  if (url === "/sign_in") {
+    if (payload.username !== "username" || payload.password !== "12345678901") {
+      return;
+    }
+    await delay();
+    const author: Author = {
+      id: "1",
+      username: payload.username,
+    };
+    return Promise.resolve({
+      data: author,
+    });
+  }
 };
 
 // @ts-ignore

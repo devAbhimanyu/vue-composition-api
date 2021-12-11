@@ -33,7 +33,7 @@ export default defineComponent({
       };
     });
 
-    const closeModal = modal.hidModal;
+    const closeModal = modal.hideModal;
 
     return { style, closeModal, username };
   },

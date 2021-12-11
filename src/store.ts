@@ -102,8 +102,8 @@ export class Store {
 
   async signIn(user: User) {
     // hard code test user as id: 1
-    const response = await axios.post<Author>("/sign_in", user);
-    this.state.authors.all.set("1", response.data);
+    const { data } = await axios.post<Author>("/sign_in", user);
+    this.state.authors.all.set("1", data);
     this.state.authors.ids.push("1");
     this.state.authors.currentUserId = "1";
   }

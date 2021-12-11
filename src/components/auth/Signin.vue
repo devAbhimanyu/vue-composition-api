@@ -1,5 +1,6 @@
 <template>
   <form @submit.prevent="submit">
+    <p>Test account is username: "username", password: "12345678901".</p>
     <form-input
       v-model="username"
       name="Username"
@@ -25,31 +26,20 @@
 
 <script lang="ts">
 import { computed, defineComponent, ref } from "vue";
-import FormInput from "../FormInput.vue";
-import { required, length, Status, validate } from "../../utils";
+import { required, Status, validate } from "../../utils";
 import { User, useStore } from "../../store";
 import { useModal } from "../../composable/useModal";
 
 export default defineComponent({
-  components: {
-    FormInput,
-  },
-
   setup() {
-    const username = ref("username");
+    const username = ref("");
     const usernameStatus = computed<Status>(() => {
-      return validate(username.value, [
-        required(),
-        length({ min: 5, max: 10 }),
-      ]);
+      return validate(username.value, [required()]);
     });
 
-    const password = ref("password");
+    const password = ref("");
     const passwordStatus = computed<Status>(() => {
-      return validate(password.value, [
-        required(),
-        length({ min: 10, max: 40 }),
-      ]);
+      return validate(password.value, [required()]);
     });
 
     const store = useStore();
@@ -60,13 +50,13 @@ export default defineComponent({
         return;
       }
 
-      const newUser: User = {
+      const user: User = {
         id: "-1",
         username: username.value,
         password: password.value,
       };
 
-      await store.createUser(newUser);
+      await store.signIn(user);
       modal.hideModal();
     };
 

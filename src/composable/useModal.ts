@@ -6,6 +6,6 @@ export function useModal() {
     show,
     component,
     showModal: () => (show.value = true),
-    hidModal: () => (show.value = false),
+    hideModal: () => (show.value = false),
   };
 }
