@@ -57,7 +57,7 @@ export default defineComponent({
     const { post } = props;
     const { emit } = ctx;
     const title = ref(post.title);
-    const content = ref("## Title\nEnter your post content");
+    const content = ref(post.markdown);
     const contentEditable = ref<HTMLDivElement | null>(null);
     const mdString = ref("");
 
@@ -88,7 +88,7 @@ export default defineComponent({
     }
 
     onMounted(() => {
-      if (contentEditable.value)
+      if (contentEditable.value && content.value)
         contentEditable.value.textContent = content.value;
     });
 

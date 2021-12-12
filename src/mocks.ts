@@ -12,6 +12,7 @@ export const today: Post = {
   id: "1",
   title: "Today",
   created: moment().subtract(1, "second"),
+  markdown: "## Title\nEnter your post content",
   authorId: "1",
 };
 
@@ -19,12 +20,14 @@ export const thisWeek: Post = {
   id: "2",
   title: "This Week",
   created: moment().subtract(2, "days"),
+  markdown: "## Title\nEnter your post content",
   authorId: "1",
 };
 
 export const thisMonth: Post = {
   id: "3",
   title: "This Month",
+  markdown: "## Title\nEnter your post content",
   created: moment().subtract(12, "days"),
   authorId: "2",
 };
